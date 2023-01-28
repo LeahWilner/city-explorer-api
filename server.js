@@ -19,10 +19,11 @@ app.get('/weather', (request, response) => {
 //   try {
 
   //localhost:3002/weather?searchquery=Seattle
-  let searchQuery = request.query.searchquery;
+  let searchQueryCity = request.query.searchquery;
 
-  let dataToInstantiate = data.find(weather => weather.city_name === searchQuery);
-  let dataToSend = new Weather(dataToInstantiate);
+  let dataToInstantiate = data.find(weather => weather.city_name.toLowerCase() === searchQueryCity.toLowerCase());
+  console.log('DTI',dataToInstantiate);
+  let dataToSend = searchQueryCity.data.map((city) => new Weather(city));
 
   response.status(200).send(dataToSend);
 
@@ -38,7 +39,7 @@ app.get('*', (request, response) => {
 
 class Weather {
   constructor(weatherObject) {
-    console.log('CCCCC',weatherObject.data[0].datetime);
+    console.log('CCCCC',weatherObject.data.datetime);
     this.location = weatherObject.city_name;
     // this.weatherForecast = weatherObject.weather.description;
     // this.datetime = weatherObject.datetime;
