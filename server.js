@@ -20,12 +20,15 @@ app.get('/weather', (request, response) => {
 
   //localhost:3002/weather?searchquery=Seattle
   let searchQueryCity = request.query.searchquery;
+  let lat = request.query.lat;
+  let lon = request.query.lon;
+  console.log(`----------------${lat} + ${lon}`);
 
   let dataToInstantiate = data.find(weather => weather.city_name.toLowerCase() === searchQueryCity.toLowerCase());
 
-  console.log('dataToInstantiate:',dataToInstantiate);
+  // console.log('dataToInstantiate:',dataToInstantiate);
   let dataToSend = dataToInstantiate.data.map((weather) => new Weather(weather));
-  console.log('dataToSend:', dataToSend);
+  // console.log('dataToSend:', dataToSend);
 
   response.status(200).send(dataToSend);
 
