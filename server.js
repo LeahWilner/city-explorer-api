@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 5005;
 
+const axios = require('axios');
+
 app.get('/', (request, response) => {
   response.send('Hello from server HOME route / !!');
 });
@@ -42,11 +44,33 @@ app.get('*', (request, response) => {
   response.status(404).send('The route was not found. Error 404');
 });
 
+app.get('/movies', async (request, response, next) => {
+  try {
+    let frontEndSearchQuery = request.query.searchquery;
+    let url = `https://api.themoviedb.org/3/movie/550?client_id=${process.env.MOVIE_API_KEY}&query=${frontEndSearchQuery}&format=json`;
+    let results = await axios.get(url);
+    let constructorData= results.data;
+    response.status(200).send(constructorData);
+    console.log(results.data);
+  } catch (error) {
+    next(error);
+  }
+
+});
+
 class Weather {
   constructor(weatherObject) {
     console.log('yo',weatherObject);
     this.weatherForecast = weatherObject.weather.description;
     this.datetime = weatherObject.datetime;
+  }
+}
+
+class Movies {
+  constructor(movieObject) {
+    console.log('yo', movieObject);
+    this.movieObject = movieObject.description;
+    // this.datetime = weatherObject.datetime;
   }
 }
 
