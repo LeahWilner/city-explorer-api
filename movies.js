@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-// const axios = require('axios');
+const axios = require('axios');
 
 // app.get('/movies', async (request, response, next) => {
 //   try {
@@ -15,18 +15,18 @@ const app = express();
 //   }
 // });
 
-function getMovies(req, res){
+async function getMovies(req, res){
   let frontEndSearchQuery = req.query.searchQuery;
   console.log(frontEndSearchQuery);
-  //   let url = 'https://www.themoviedb.org/3/search/movie';
-  //   let params = {
-  //     api_key: process.env.MOVIE_API_KEY,
-  //     query:frontEndSearchQuery
-  //   };
+  let url = 'https://api.themoviedb.org/3/search/movie';
+  let params = {
+    api_key: process.env.MOVIE_API_KEY,
+    query:frontEndSearchQuery
+  };
 
-  //   axios.get(url, {params})
-  //     .then(results => results.data.results.map((film) => new Movies(film)));
-  //   // .then(movieInstance => console.log(movieInstance));
+  axios.get(url, {params})
+    .then(results => results.data.results.map((movieObject) => new Movies(movieObject)));
+  // .then(movieInstance => console.log(movieInstance));
   res.status(200).send('were ok');
 }
 
@@ -44,16 +44,16 @@ app.use((error, req, res) => {
 });
 
 
-// class Movies {
-//   constructor(movieObject) {
-//     console.log('yo', movieObject);
-//     this.movieObject = movieObject.data;
-//     this.id = movieObject.id;
-//     this.title = movieObject.title;
-//     this.overview = movieObject.overview;
-//     this.cover = movieObject.cover;
-//   }
-// }
+class Movies {
+  constructor(movieObject) {
+    console.log('yo', movieObject);
+    this.movieObject = movieObject.data;
+    this.id = movieObject.id;
+    this.title = movieObject.title;
+    this.overview = movieObject.overview;
+    this.cover = movieObject.cover;
+  }
+}
 
 
 module.exports = getMovies;
