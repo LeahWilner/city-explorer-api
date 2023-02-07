@@ -7,15 +7,15 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 5005;
-
-const axios = require('axios');
+const getMovies = require('./movies.js');
+// const axios = require('axios');
 
 // let Movies = process.env.MOVIE_API_KEY
 
 app.get('/', (request, response) => {
   response.send('Hello from server HOME route / !!');
 });
-
+app.get('/movies', getMovies);
 
 // eslint-disable-next-line no-unused-vars
 // app.use((error, request, response, next) => {

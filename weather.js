@@ -25,6 +25,7 @@ app.get('/weather', (request, response) => {
   response.status(200).send(dataToSend);
 });
 
+// module.exports = getWeather;
 
 class Weather {
   constructor(weatherObject) {
