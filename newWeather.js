@@ -4,13 +4,13 @@ require('dotenv').config();
 
 'use strict';
 
-let cache = require('./cache.js');
+let cache = require('./modules/cache.js');
 
 function getWeather(lat, lon) {
   const key = 'weather-' + lat + lon;
   const url = `http://api.weatherapi.com/v1/forecast.json?key=${
     process.env.WEATHER_API_KEY
-  }&days=1&aqi=no&alerts=no&q=${(lat, lon)}`;
+  }&days=5&aqi=no&alerts=no&q=${(lat, lon)}`;
 
   if (cache[key] && Date.now() - cache[key].timestamp < 5000) {
     console.log('cache hit');

@@ -18,7 +18,7 @@ app.get('/', (request, response) => {
 });
 app.get('/movies', getMovies);
 
-app.get('/newWeather', getWeather);
+app.get('/newweather', getWeather);
 
 function getWeather(req, res) {
   const {lat, lon} = req.query;
