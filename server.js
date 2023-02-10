@@ -20,14 +20,14 @@ app.get('/movies', getMovies);
 
 app.get('/newweather', getWeather);
 
-function getWeather(req, res) {
-  console.log(req.query);
-  const {lat, lon} = req.query;
+function getWeather(request, response) {
+
+  const {lat, lon} = request.query;
   weather(lat, lon)
-    // .then(summaries => res.status(200).send(summaries))
-    .then(summaries => console.log(summaries))
+  //sends to the front objects
+    .then(summaries => response.status(200).send(summaries))
     .catch((error) => {
-      res.status(500).send('Sorry, weather is unavailable at this time', error);
+      response.status(500).send('Sorry, weather is unavailable at this time', error);
     });
 }
 

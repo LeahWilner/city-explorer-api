@@ -5,7 +5,7 @@ const app = express();
 const axios = require('axios');
 
 async function getMovies(request, response,next) {
-  // console.log('MOOOOOOVIES',request.query);
+  console.log('MOOOOOOVIES',request.query);
   try {
     let movieSearchQuery = request.query.searchQuery;
     console.log(movieSearchQuery);
