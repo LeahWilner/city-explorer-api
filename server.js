@@ -7,8 +7,9 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 5005;
-const getMovies = require('./movies.js');
-const weather = require('./newWeather.js');
+const getMovies = require('./modules/movies.js');
+const weather = require('./modules/newWeather.js');
+const yelp = require('./modules/yelp.js');
 // const axios = require('axios');
 
 // let Movies = process.env.MOVIE_API_KEY
@@ -20,6 +21,8 @@ app.get('/movies', getMovies);
 
 app.get('/newweather', getWeather);
 
+app.get('/yelp', getYelp);
+
 function getWeather(request, response) {
 
   const {lat, lon} = request.query;
@@ -28,6 +31,17 @@ function getWeather(request, response) {
     .then(summaries => response.status(200).send(summaries))
     .catch((error) => {
       response.status(500).send('Sorry, weather is unavailable at this time', error);
+    });
+}
+
+function getYelp(request, response) {
+
+  const location = request.query.searchQuery;
+  yelp(location, request.query.page)
+    .then(reviews => response.send(reviews))
+    .catch((error) => {
+      console.error(error);
+      response.status(500).send('Sorry. Something went wrong!');
     });
 }
 

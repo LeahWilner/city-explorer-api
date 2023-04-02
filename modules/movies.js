@@ -11,10 +11,16 @@ async function getMovies(request, response,next) {
     console.log(movieSearchQuery);
     let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${movieSearchQuery}`;
     let results = await axios.get(url);
-    console.log('GGGGGGGG',results.data.results);
+    // console.log('GGGGGGGG',results.data.results);
+    const movieResults = results.data.results.map((movie) => {
+      return new Movies(movie);
+    });
+    console.log(movieResults);
     //you need to send to your Movie constructor then response 
 
-    response.status(200).send(results.data.results);
+
+
+    response.status(200).send(movieResults);
   } catch (error) {
     next(error);
   }
@@ -72,7 +78,7 @@ class Movies {
     // this.id = movieObject.id;
     this.title = movieObject.title;
     this.overview = movieObject.overview;
-    this.posterPath = 'https://image.tmdb.org/t/p/w500' + movieObject.posterPath;
+    this.posterPath = `https://image.tmdb.org/t/p/w500/${movieObject.poster_path}`;
   }
 }
 
