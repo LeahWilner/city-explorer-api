@@ -4,7 +4,7 @@ require('dotenv').config();
 
 'use strict';
 
-let cache = require('./modules/cache.js');
+let cache = require('./cache.js');
 
 function getWeather(lat, lon) {
 
